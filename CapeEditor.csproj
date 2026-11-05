@@ -3,7 +3,7 @@
        (no SDK? use build.ps1, which uses the compiler that ships with Unity) -->
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>ClaudeCapeEditor</AssemblyName>
+    <AssemblyName>CapeEditor</AssemblyName>
     <RootNamespace>CapeEditor</RootNamespace>
     <LangVersion>10</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -36,6 +36,6 @@
   </ItemGroup>
 
   <Target Name="CopyToBuild" AfterTargets="Build">
-    <Copy SourceFiles="$(OutputPath)ClaudeCapeEditor.dll" DestinationFolder="build" />
+    <Copy SourceFiles="$(OutputPath)CapeEditor.dll" DestinationFolder="build" />
   </Target>
 </Project>

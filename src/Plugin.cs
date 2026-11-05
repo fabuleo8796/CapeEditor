@@ -18,7 +18,7 @@ namespace CapeEditor;
 [BepInPlugin(Guid, "Cape Editor", Version)]
 public class Plugin : BasePlugin
 {
-    public const string Guid = "com.fabuleo8796.capeeditor", Version = "1.0.1";
+    public const string Guid = "com.fabuleo8796.capeeditor", Version = "1.0.2";
     internal static ManualLogSource Logger;
     internal static ConfigEntry<Key> MenuKey, ToggleKey;
     internal static ConfigEntry<bool> Enabled;
@@ -31,7 +31,7 @@ public class Plugin : BasePlugin
         MenuKey = Config.Bind("Keys", "Menu", Key.O, "Opens and closes the Cape Editor menu.");
         ToggleKey = Config.Bind("Keys", "Toggle", Key.O, "Shift + this key turns your custom cape on or off.");
         Enabled = Config.Bind("Cape", "Enabled", true, "Show your custom cape (the menu's switch, or Shift + Toggle key).");
-        Equipped = Config.Bind("Cape", "Equipped", "", "The custom cape you wear: its folder in BepInEx\\config\\ClaudeCapeEditor\\capes. Empty = the game's own cape.");
+        Equipped = Config.Bind("Cape", "Equipped", "", "The custom cape you wear: its folder in BepInEx\\config\\CapeEditor\\capes. Empty = the game's own cape.");
         TextureSize = Config.Bind("Cape", "TextureSize", 1024, new ConfigDescription(
             "Size of the cape texture. 1024 is sharp (the game's own capes are 512); 2048 is sharper and uses 4x the memory.",
             new AcceptableValueList<int>(512, 1024, 2048)));
@@ -51,7 +51,26 @@ public class Plugin : BasePlugin
                     $"{Library.Designs.Count} custom cape(s) in {Library.Root}");
     }
 
-    internal static string Folder => Path.Combine(Paths.ConfigPath, "ClaudeCapeEditor");
+    static string folder;
+
+    /// BepInEx\config\CapeEditor. Up to 1.0.1 it was config\ClaudeCapeEditor: that folder moves over once,
+    /// so saved capes stay.
+    internal static string Folder => folder ??= MoveOldFolder();
+
+    static string MoveOldFolder()
+    {
+        var now = Path.Combine(Paths.ConfigPath, "CapeEditor");
+        var old = Path.Combine(Paths.ConfigPath, "ClaudeCapeEditor");
+        try
+        {
+            if (Directory.Exists(old) && !Directory.Exists(now)) Directory.Move(old, now);
+        }
+        catch (Exception e)
+        {
+            Plugin.Logger?.LogWarning($"couldn't move {old} to {now}: {e.Message}");
+        }
+        return now;
+    }
 
     /// Pictures are kept at most this big while editing (twice the texture: room to zoom in).
     internal static int SourceMax => Math.Clamp(TextureSize.Value * 2, 1024, 4096);

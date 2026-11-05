@@ -8,7 +8,7 @@ using UnityEngine;
 namespace CapeEditor;
 
 /// One custom cape: a copy of the player's picture and how it sits on the cape. Lives in its own folder,
-/// BepInEx\config\ClaudeCapeEditor\capes\<id>\ (source picture, design.txt, thumb.png and cached cape textures).
+/// BepInEx\config\CapeEditor\capes\<id>\ (source picture, design.txt, thumb.png and cached cape textures).
 internal sealed class Design
 {
     public string Id, Folder, Name, SourceFile;

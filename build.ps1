@@ -1,11 +1,11 @@
-# Builds ClaudeCapeEditor.dll without the .NET SDK, using the C# compiler that ships with Unity (or any csc.dll).
+# Builds CapeEditor.dll without the .NET SDK, using the C# compiler that ships with Unity (or any csc.dll).
 #
 #   powershell -ExecutionPolicy Bypass -File build.ps1
 #   powershell -ExecutionPolicy Bypass -File build.ps1 -GameDir "D:\Games\Flipping is Hard" -Install
 #
 # Needs: Flipping is Hard with BepInEx 6 (IL2CPP) run at least once (so BepInEx\interop exists), and a Unity editor
 # (any 2021+ version has Editor\Data\NetCoreRuntime\dotnet.exe and Editor\Data\DotNetSdkRoslyn\csc.dll).
-# -Install copies the DLL to <game>\BepInEx\plugins\ClaudeCapeEditor\ (close the game first: it locks plugin DLLs).
+# -Install copies the DLL to <game>\BepInEx\plugins\CapeEditor\ (close the game first: it locks plugin DLLs).
 param(
     [string]$GameDir = "C:\Program Files (x86)\Steam\steamapps\common\Flipping is Hard",
     [string]$UnityEditor = "",
@@ -32,7 +32,7 @@ if (-not (Test-Path (Join-Path $GameDir "BepInEx\interop\Assembly-CSharp.dll")))
 $lines = New-Object System.Collections.Generic.List[string]
 $lines.AddRange([string[]]@("-nologo", "-nostdlib", "-target:library", "-langversion:10", "-unsafe", "-optimize", "-deterministic", "-nowarn:CS1701,CS1702,CS0618"))
 New-Item -ItemType Directory -Force (Join-Path $root "build") | Out-Null
-$out = Join-Path $root "build\ClaudeCapeEditor.dll"
+$out = Join-Path $root "build\CapeEditor.dll"
 $lines.Add("-out:`"$out`"")
 # .NET 6 as the game's BepInEx runs it
 Get-ChildItem (Join-Path $GameDir "dotnet") -Filter *.dll | Where-Object { ($_.Name -like "System*" -or $_.Name -in @("mscorlib.dll", "netstandard.dll")) -and $_.Name -notlike "*Native*" } |
@@ -48,7 +48,7 @@ foreach ($res in @("Geist-SemiBold.ttf", "Geist-Medium.ttf", "OFL-Geist.txt")) {
 }
 Get-ChildItem (Join-Path $root "src") -Filter *.cs | ForEach-Object { $lines.Add("`"$($_.FullName)`"") }
 
-$rsp = Join-Path $root "build\ClaudeCapeEditor.rsp"
+$rsp = Join-Path $root "build\CapeEditor.rsp"
 [System.IO.File]::WriteAllLines($rsp, $lines)
 & $dotnet $csc "@$rsp"
 if ($LASTEXITCODE -ne 0) { throw "The build failed (see the errors above)." }
@@ -56,7 +56,7 @@ Write-Host "Built $out"
 
 if ($Install) {
     if (Get-Process -Name "Flipping is Hard" -ErrorAction SilentlyContinue) { throw "Close the game first: it locks the plugin DLL." }
-    $dest = Join-Path $GameDir "BepInEx\plugins\ClaudeCapeEditor"
+    $dest = Join-Path $GameDir "BepInEx\plugins\CapeEditor"
     New-Item -ItemType Directory -Force $dest | Out-Null
     Copy-Item $out $dest -Force
     Write-Host "Installed to $dest"

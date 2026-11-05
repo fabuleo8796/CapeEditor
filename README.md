@@ -4,14 +4,14 @@ Put your own picture on a base-game cape, right inside the game. Pick a picture 
 editor, and wear it. The cape keeps the game's own cloth physics, so it swings and collides exactly like the vanilla
 one.
 
-A BepInEx 6 (IL2CPP) plugin: one DLL, `ClaudeCapeEditor.dll`.
+A BepInEx 6 (IL2CPP) plugin: one DLL, `CapeEditor.dll`.
 
 ## Install
 
 1. Flipping is Hard needs **BepInEx 6 IL2CPP** (bleeding edge, build 755 or newer). Start the game once with it, so it
    makes `BepInEx\interop`.
-2. Put `ClaudeCapeEditor.dll` in `<game>\BepInEx\plugins\ClaudeCapeEditor\`. Any folder under `plugins` works.
-3. Start the game. `BepInEx\LogOutput.log` should say `Cape Editor 1.0.1 loaded`.
+2. Put `CapeEditor.dll` in `<game>\BepInEx\plugins\CapeEditor\`. Any folder under `plugins` works.
+3. Start the game. `BepInEx\LogOutput.log` should say `Cape Editor 1.0.2 loaded`.
 
 ## Use it
 
@@ -87,7 +87,7 @@ Other players see your normal cape: the mod is client-side only and sends nothin
   180°. The mod handles that, so your picture is upright and not mirrored, outside and inside.
 - **Texture size.** 1024×1024 by default (the game's own capes are 512×512). `TextureSize = 2048` in the cfg makes it
   sharper and uses 4× the memory.
-- **Saved capes.** `BepInEx\config\ClaudeCapeEditor\capes\<id>\` holds a copy of your picture, `design.txt` (your
+- **Saved capes.** `BepInEx\config\CapeEditor\capes\<id>\` holds a copy of your picture, `design.txt` (your
   crop and options), a thumbnail, and the finished cape texture as a cache, so it loads fast next time. Deleting the
   folder removes that cape.
 
@@ -102,7 +102,7 @@ powershell -ExecutionPolicy Bypass -File build.ps1
 powershell -ExecutionPolicy Bypass -File build.ps1 -GameDir "D:\Games\Flipping is Hard" -Install
 ```
 
-The DLL lands in `build\ClaudeCapeEditor.dll`. `-Install` also copies it to `BepInEx\plugins\ClaudeCapeEditor\`.
+The DLL lands in `build\CapeEditor.dll`. `-Install` also copies it to `BepInEx\plugins\CapeEditor\`.
 Close the game first, because it locks plugin DLLs.
 
 **With the .NET SDK (6 or newer):**
