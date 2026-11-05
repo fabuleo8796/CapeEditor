@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- For people with the .NET SDK: dotnet build -c Release -p:GameDir="C:\...\Flipping is Hard"
+       (no SDK? use build.ps1, which uses the compiler that ships with Unity) -->
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>ClaudeCapeEditor</AssemblyName>
+    <RootNamespace>CapeEditor</RootNamespace>
+    <LangVersion>10</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+    <OutputPath>build\bin\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GameDir Condition="'$(GameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Flipping is Hard</GameDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\*.cs" />
+    <EmbeddedResource Include="src\Resources\Geist-SemiBold.ttf" LogicalName="Geist-SemiBold.ttf" />
+    <EmbeddedResource Include="src\Resources\Geist-Medium.ttf" LogicalName="Geist-Medium.ttf" />
+    <EmbeddedResource Include="src\Resources\OFL-Geist.txt" LogicalName="OFL-Geist.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="$(GameDir)\BepInEx\core\BepInEx.Core.dll" Private="false" />
+    <Reference Include="$(GameDir)\BepInEx\core\BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="$(GameDir)\BepInEx\core\BepInEx.Unity.Common.dll" Private="false" />
+    <Reference Include="$(GameDir)\BepInEx\core\0Harmony.dll" Private="false" />
+    <Reference Include="$(GameDir)\BepInEx\core\Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="$(GameDir)\BepInEx\core\Il2CppInterop.Common.dll" Private="false" />
+    <!-- every interop assembly except the 3 KB UnityEngine.dll facade, which makes types ambiguous -->
+    <Reference Include="$(GameDir)\BepInEx\interop\*.dll" Exclude="$(GameDir)\BepInEx\interop\UnityEngine.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="CopyToBuild" AfterTargets="Build">
+    <Copy SourceFiles="$(OutputPath)ClaudeCapeEditor.dll" DestinationFolder="build" />
+  </Target>
+</Project>

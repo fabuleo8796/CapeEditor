@@ -1,0 +1,6 @@
+_private/
+build/bin/
+build/obj/
+obj/
+build/*.rsp
+build/
