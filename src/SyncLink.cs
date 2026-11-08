@@ -50,7 +50,9 @@ internal static class SyncLink
     {
         var layout = CapeSwap.WornLayout;
         var d = Plugin.Enabled.Value ? Library.Find(Plugin.Equipped.Value) : null;
-        return layout == null || d == null ? null : d.CachePath(d.Edit, layout, CapeTextures.Size);
+        if (layout == null || d == null) return null;
+        var path = d.CachePath(d.Edit, layout, CapeTextures.Size);
+        return File.Exists(path) ? path : null; // still being built: shared once it's ready
     }
 
     static byte[] Data()
