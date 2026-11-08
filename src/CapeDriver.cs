@@ -32,6 +32,7 @@ public class CapeDriver : MonoBehaviour
     {
         Worker.Drain();
         CapeSwap.Tick();
+        SyncLink.Tick();
         Ui.Tick();
         if (!built && Time.unscaledTime > 4f)
         {

@@ -16,9 +16,10 @@ namespace CapeEditor;
 /// Only the cape's texture changes: its mesh, bones and Magica Cloth physics are the game's own, so it swings and
 /// collides exactly like the vanilla cape. Client-side only: other players see your normal cape.
 [BepInPlugin(Guid, "Cape Editor", Version)]
+[BepInDependency("com.fabuleo8796.fihsync", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BasePlugin
 {
-    public const string Guid = "com.fabuleo8796.capeeditor", Version = "1.0.2";
+    public const string Guid = "com.fabuleo8796.capeeditor", Version = "1.1.0";
     internal static ManualLogSource Logger;
     internal static ConfigEntry<Key> MenuKey, ToggleKey;
     internal static ConfigEntry<bool> Enabled;
@@ -44,6 +45,7 @@ public class Plugin : BasePlugin
         Object.DontDestroyOnLoad(host);
         host.hideFlags = HideFlags.HideAndDontSave;
         host.AddComponent<CapeDriver>();
+        SyncLink.Start();
         // No Harmony hook on SkinPrefabHandler.OnSkinApplied: its base body is empty, and the game build folds every
         // empty method into one shared function (16768 callers), so a hook there runs for thousands of unrelated
         // methods and crashed the game. CapeSwap watches the capes each frame instead.
