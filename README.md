@@ -60,7 +60,8 @@ The base capes come in three shape families. Each family shares one mesh, so it 
 The Gold cape (a frilled mesh), wings, backpacks and other back items aren't flat capes, so the menu doesn't offer
 them.
 
-Other players see your normal cape: the mod is client-side only and sends nothing over the network.
+Other players see your normal cape, unless you both run [FIH Sync](https://github.com/Fabuleo8796/FIHSync) (0.1.2+): then modded players see each other's custom
+capes (painted on the base cape each of you wears).
 
 ## How it works (and why the physics can't break)
 
