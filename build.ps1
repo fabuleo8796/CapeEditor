@@ -43,6 +43,8 @@ foreach ($core in @("BepInEx.Core.dll", "BepInEx.Unity.IL2CPP.dll", "BepInEx.Uni
 # the game's interop assemblies (UnityEngine.dll there is a tiny facade that makes types ambiguous: skip it)
 Get-ChildItem (Join-Path $GameDir "BepInEx\interop") -Filter *.dll | Where-Object { $_.Name -ne "UnityEngine.dll" } |
     ForEach-Object { $lines.Add("-r:`"$($_.FullName)`"") }
+# the mods it can talk to (FIH Sync, a soft dependency)
+Get-ChildItem (Join-Path $root "lib") -Filter *.dll -ErrorAction SilentlyContinue | ForEach-Object { $lines.Add("-r:`"$($_.FullName)`"") }
 foreach ($res in @("Geist-SemiBold.ttf", "Geist-Medium.ttf", "OFL-Geist.txt")) {
     $lines.Add("-resource:`"$(Join-Path $root "src\Resources\$res")`",$res")
 }

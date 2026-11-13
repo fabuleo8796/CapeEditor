@@ -6,12 +6,15 @@ one.
 
 A BepInEx 6 (IL2CPP) plugin: one DLL, `CapeEditor.dll`.
 
+> **FIH Sync comes included** (since 1.1.1): `FIHSync.dll` is in the mod's folder, so sharing with other modded players works without installing anything else. With several of my mods installed, BepInEx runs only one copy of it (the newest).
+
 ## Install
 
 1. Flipping is Hard needs **BepInEx 6 IL2CPP** (bleeding edge, build 755 or newer). Start the game once with it, so it
    makes `BepInEx\interop`.
-2. Put `CapeEditor.dll` in `<game>\BepInEx\plugins\CapeEditor\`. Any folder under `plugins` works.
-3. Start the game. `BepInEx\LogOutput.log` should say `Cape Editor 1.0.2 loaded`.
+2. Extract the zip into the game folder: you get `<game>\BepInEx\plugins\CapeEditor\` with `CapeEditor.dll` and
+   `FIHSync.dll` (for sharing). Any folder under `plugins` works.
+3. Start the game. `BepInEx\LogOutput.log` should say `Cape Editor 1.1.1 loaded`.
 
 ## Use it
 

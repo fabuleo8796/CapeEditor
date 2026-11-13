@@ -19,7 +19,7 @@ namespace CapeEditor;
 [BepInDependency("com.fabuleo8796.fihsync", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BasePlugin
 {
-    public const string Guid = "com.fabuleo8796.capeeditor", Version = "1.1.0";
+    public const string Guid = "com.fabuleo8796.capeeditor", Version = "1.1.1";
     internal static ManualLogSource Logger;
     internal static ConfigEntry<Key> MenuKey, ToggleKey;
     internal static ConfigEntry<bool> Enabled;
